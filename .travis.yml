@@ -5,3 +5,5 @@ before_install:
   - pip install -r requirements.txt
   - python3 manage.py migrate
 script: python3 manage.py test
+notifications:
+  email: false
