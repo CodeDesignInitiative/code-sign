@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+    <div class="card-panel">
+        <div class="center">
+            <canvas class="hoverable grey darken-1"></canvas>
+        </div>
+        <div class="row">
+            <div class="input-field col s6">
+                <input placeholder="Satoshi" id="first_name" type="text">
+                <label for="first_name">First Name</label>
+            </div>
+            <div class="input-field col s6">
+                <input placeholder="Nakamoto" id="last_name" type="text">
+                <label for="last_name">Last Name</label>
+            </div>
+        </div>
+        <button class="btn btn-large purple accent-1 waves-effect waves-light" id="sign">Sign</button>
+        <button class="btn btn-large grey accent-1 waves-effect waves-light right" id="clear">Clear</button>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        (() => {
+            const signaturePad = new SignaturePad(document.querySelector("canvas"));
+            $("#clear").click(() => signaturePad.clear());
+            $("#sign").click(() => {
+                const isValid = $("#first_name").val() !== "" && $("#last_name").val() !== "" && !signaturePad.isEmpty();
+                if (!isValid) {
+                    M.toast({html: "The form is invalid."});
+                } else {
+                    $.post("/", {
+                        "first_name": $("#first_name").val(),
+                        "last_name": $("#last_name").val(),
+                        "signature": signaturePad.toDataURL()
+                    }).fail(e => M.toast({html: "There was an error submitting your request."}));
+                }
+            });
+        })();
+    </script>
+{% endblock %}
