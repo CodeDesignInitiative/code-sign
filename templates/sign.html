@@ -2,7 +2,8 @@
 
 
 {% block content %}
-    <div class="card-panel">
+    {% csrf_token %}
+    <div class="card-panel" id="msg">
         <div class="center">
             <canvas class="hoverable grey darken-1"></canvas>
         </div>
@@ -34,8 +35,9 @@
                     $.post("/", {
                         "first_name": $("#first_name").val(),
                         "last_name": $("#last_name").val(),
-                        "signature": signaturePad.toDataURL()
-                    }).fail(e => M.toast({html: "There was an error submitting your request."}));
+                        "signature": signaturePad.toDataURL(),
+                        "csrfmiddlewaretoken": $("input[name='csrfmiddlewaretoken']").val()
+                    }, d => $("#msg").html("<p class='flow-text'>" + d.message + "</p>")).fail(e => M.toast({html: "There was an error submitting your request."}));
                 }
             });
         })();

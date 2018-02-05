@@ -1,3 +1,5 @@
+from django.core import serializers
+from django.http import JsonResponse
 from django.shortcuts import render
 
 from sign.forms import SignatureForm
@@ -10,6 +12,7 @@ def sign(request):
         form = SignatureForm(request.POST)
         if form.is_valid():
             form.save()
+            return JsonResponse({"message": "Your signature was successfully saved. Thank you!"})
         else:
-            return render(request, "message.html",
-                          {"message": "There was a critical error executing your request. The form was not valid."})
+            return JsonResponse({
+                "message": "There was a critical error executing your request. The form was not valid."})
