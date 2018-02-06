@@ -3,7 +3,8 @@ version: '3'
 services:
   db:
     image: postgres
-    volumes: ./data:/var/lib/postgresql/data
+    volumes: 
+      - ./data:/var/lib/postgresql/data
     restart: always
   web:
     build: .
