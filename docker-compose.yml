@@ -4,7 +4,7 @@ services:
   db:
     image: postgres
     volumes: 
-      - ./data:/var/lib/postgresql/data
+      - ../pg-data:/var/lib/postgresql/data
     restart: always
   web:
     build: .
@@ -16,3 +16,5 @@ services:
       - "8000:8000"
     depends_on:
       - db
+    env_file:
+      - .env

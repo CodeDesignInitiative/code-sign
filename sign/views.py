@@ -1,5 +1,7 @@
+import os
 from django.http import JsonResponse
 from django.shortcuts import render
+import requests
 
 from sign.forms import SignatureForm
 

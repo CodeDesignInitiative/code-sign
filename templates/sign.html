@@ -7,6 +7,7 @@
         <div class="center">
             <canvas class="hoverable grey purple accent-1"></canvas>
         </div>
+        <br>
         <div class="row">
             <div class="input-field col s6">
                 <input placeholder="Satoshi" id="first_name" type="text">
@@ -17,18 +18,27 @@
                 <label for="last_name">Last Name</label>
             </div>
         </div>
+        <div class="g-recaptcha" data-sitekey="6LftCUUUAAAAAE9L9DHmSa0HI-GUkP7sKnShufAk" data-callback="_x"></div>
+        <br>
         <button class="btn btn-large purple accent-1 waves-effect waves-light" id="sign">Sign</button>
         <button class="btn btn-large grey accent-1 waves-effect waves-light right" id="clear">Clear</button>
     </div>
 {% endblock %}
 
 {% block scripts %}
+    <script src='https://www.google.com/recaptcha/api.js'></script>
     <script>
+        let token = null;
+
+        function _x(t) {
+            token = t;
+        }
+
         (() => {
             const signaturePad = new SignaturePad(document.querySelector("canvas"));
             $("#clear").click(() => signaturePad.clear());
             $("#sign").click(() => {
-                const isValid = $("#first_name").val() !== "" && $("#last_name").val() !== "" && !signaturePad.isEmpty();
+                const isValid = $("#first_name").val() !== "" && $("#last_name").val() !== "" && !signaturePad.isEmpty() && token != null;
                 if (!isValid) {
                     M.toast({html: "The form is invalid."});
                 } else {
@@ -36,7 +46,8 @@
                         "first_name": $("#first_name").val(),
                         "last_name": $("#last_name").val(),
                         "signature": signaturePad.toDataURL(),
-                        "csrfmiddlewaretoken": $("input[name='csrfmiddlewaretoken']").val()
+                        "csrfmiddlewaretoken": $("input[name='csrfmiddlewaretoken']").val(),
+                        "captcha_token": token
                     }, d => $("#msg").html("<p class='flow-text'>" + d.message + "</p>")).fail(e => M.toast({html: "There was an error submitting your request."}));
                 }
             });
