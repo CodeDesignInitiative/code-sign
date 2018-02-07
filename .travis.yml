@@ -4,3 +4,6 @@ services:
   - docker
 
 script: docker-compose up # Write some proper tests, please!
+
+notifications:
+  email: false
