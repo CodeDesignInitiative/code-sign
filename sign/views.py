@@ -1,4 +1,3 @@
-from django.core import serializers
 from django.http import JsonResponse
 from django.shortcuts import render
 

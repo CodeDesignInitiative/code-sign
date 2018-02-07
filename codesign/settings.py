@@ -26,8 +26,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-MEDIA_ROOT = "signatures"
-
 # Application definition
 
 INSTALLED_APPS = [
