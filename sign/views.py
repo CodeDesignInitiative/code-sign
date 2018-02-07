@@ -15,4 +15,5 @@ def sign(request):
             return JsonResponse({"message": "Your signature was successfully saved. Thank you!"})
         else:
             return JsonResponse({
-                "message": "There was a critical error executing your request. The form was not valid."})
+                "message": "There was a critical error executing your request. The form was not valid.",
+                "error": form.errors})
