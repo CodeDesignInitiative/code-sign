@@ -14,7 +14,7 @@ class SignatureAdmin(admin.ModelAdmin):
     admin_image.short_description = "Signature"
     admin_image.admin_order_field = 'last_name'
 
-    list_display = ["first_name", "last_name", admin_image, ]
+    list_display = ["first_name", "last_name", admin_image, "timestamp"]
 
     search_fields = ["first_name", "last_name"]
 
